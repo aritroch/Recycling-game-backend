@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import RecyclableItem, GameSession, Bin, Leaderboard
 from .serializers import RecyclableItemSerializer, GameSessionSerializer
-import random
+import randomy
+from game import views
 
 @api_view(['GET'])
 def get_recyclable_items(request):
