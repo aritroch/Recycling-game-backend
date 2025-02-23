@@ -5,18 +5,16 @@ import FallingGrid from "./FallingGrid.jsx";
 import Bins from "./Bins.jsx";
 import ScoreBoard from "./ScoreBoard.jsx";
 import LeaderBoard from "./LeaderBoard.jsx";
-import GameDescription from "./GameDescription.jsx";
-import Header from "./Header.jsx"
-import EducationalImpact from "./EducationalImpact.jsx";
-import Footer from "./Footer.jsx"
-import Home from "./Home.jsx"
-import Contact from "./Contact.jsx";
-import Timer from "./Timer.jsx";
+import GameOverPopup from "./GameOverPopup.jsx";
+import TriviaPop from "./TriviaPop.jsx";
 
 function GameContainer() {
   const [score, setScore] = useState(0);
   const [items, setItems] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [gameOverReason, setGameOverReason] = useState(null);
+  const [lastItemType, setLastItemType] = useState(null);
+  const [showTrivia, setShowTrivia] = useState(false);
 
   // Spawn new items
   const spawnItem = () => {
@@ -27,8 +25,8 @@ function GameContainer() {
     const randomItem =
       matchingItems[Math.floor(Math.random() * matchingItems.length)];
 
-    const gridLeft = 30;
-    const gridWidth = 40;
+    const gridLeft = 0;
+    const gridWidth = 100;
     const randomX = gridLeft + Math.random() * gridWidth;
 
     const newItem = {
@@ -40,7 +38,6 @@ function GameContainer() {
       y: 0,
     };
 
-    // Check for overlap with existing items
     const isOverlapping = items.some(
       (item) =>
         Math.abs(item.x - newItem.x) < 10 && Math.abs(item.y - newItem.y) < 10
@@ -50,45 +47,60 @@ function GameContainer() {
       setItems((prevItems) => [...prevItems, newItem]);
     }
   };
-  
-  // Callback when time is up
-  const handleTimeUp = () => {
-    setGameOver(true);
-    alert("Time's up! Game over.");
-  };
 
-
-  // Move items downward
+  // Move Items Downward
   const moveItems = () => {
     setItems((prevItems) =>
       prevItems.map((item) => {
         const newY = item.y + 1;
         return {
           ...item,
-          y: newY <= 70 ? newY : item.y, // Stop at the bottom of the grid
+          y: newY <= 100 ? newY : item.y,
         };
       })
     );
   };
 
+  // Show trivia at specific intervals
+  useEffect(() => {
+    if (isGameOver) return;
+
+    const interval = setInterval(() => {
+      setShowTrivia(true);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [isGameOver]);
+
   // Check for missed items
   const checkGameOver = () => {
-    const missedItem = items.find((item) => item.y >= 70);
+    const missedItem = items.find((item) => item.y >= 100);
     if (missedItem) {
       setIsGameOver(true);
+      setGameOverReason("bottom");
     }
   };
 
-  // Check if item is placed correctly
-  const onDropItem = (itemId, itemType, binType) => {
-    console.log('Dropped item:', itemId, itemType, binType);
+  const onDropItem = (itemId, itemType, binType, binPosition) => {
+    console.log("Dropped item:", itemId, itemType, binType);
     if (itemType === binType) {
       setScore((prevScore) => prevScore + 10);
       setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     } else {
-      console.log('Incorrect placement! Game Over.');
       setIsGameOver(true);
+      setGameOverReason("incorrect");
+      setLastItemType(itemType);
     }
+  };
+
+  const handleRestart = () => {
+    setScore(0);
+    setItems([]);
+    setIsGameOver(false);
+    setGameOverReason(null);
+    setLastItemType(null);
+    setCurrentBackgroundIndex(0);
+    setNextBackgroundIndex(1);
   };
 
   // Game Loop
@@ -111,14 +123,16 @@ function GameContainer() {
       <Bins onDropItem={onDropItem} />
       <ScoreBoard score={score} />
       <LeaderBoard />
-      <GameDescription />
-      <Header/>
-      <EducationalImpact/>
-      <Footer/>
-      <Home/>
-      <Contact/>
-      <Timer/>
-      {isGameOver && <div className="game-over">Game Over!</div>}
+
+      {/* Display the trivia pop-up */}
+      {showTrivia && <TriviaPop onClose={() => setShowTrivia(false)} />}
+
+      <GameOverPopup
+        isGameOver={isGameOver}
+        reason={gameOverReason}
+        itemType={lastItemType}
+        onRestart={handleRestart}
+      />
     </div>
   );
 }
