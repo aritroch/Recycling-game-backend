@@ -1,0 +1,385 @@
+.app {
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/forest_background.jpg') no-repeat center/cover;
+  z-index: 1;
+}
+
+.falling-grid {
+  position: absolute;
+  top: 5%;
+  left: 30%;
+  width: 40%;
+  height: 70%;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px dashed white;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.bins {
+  position: absolute;
+  top: 75%;
+  bottom: 5%;
+  left: 30%;
+  display: flex;
+  justify-content: space-between;
+  width: 40%; 
+  z-index: 3; 
+  margin-top: 20px;
+}
+
+.bin {
+  width: 100px;
+  height: 100px;
+  border: 4px solid;
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bin-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.recycling-bin {
+  border-color: blue;
+  background: rgba(0, 0, 255, 0.1);
+}
+
+.trash-bin {
+  border-color: gray;
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.compost-bin {  
+  border-color: green;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.score-board {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 275px;
+  height: auto;
+  padding: 10px;
+  background: rgba(50, 50, 50, 0.8);
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 4;
+}
+
+.score-board h1 {
+  font-size: 1.2rem;
+  font-family: 'Times New Roman';
+  color: #55e587;
+  margin: 0;
+}
+
+.score-board .score {
+  font-weight: bold;
+  color: #55e587;
+}
+
+.leaderboard {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 275px;
+  height: auto;
+  padding: 20px;
+  background: rgba(50, 50, 50, 0.9);
+  border: 2px solid #444;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 4;
+}
+
+.leaderboard h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50; 
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.leaderboard-entry:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.rank {
+  font-weight: bold;
+  color: #9098d4;
+  width: 30px;
+  text-align: center;
+}
+
+.player {
+  font-weight: bold;
+  flex: 1;
+  margin: 0 10px;
+  color: #9098d4;
+}
+
+.score {
+  font-weight: bold;
+  color: #9098d4;
+}
+
+.falling-item {
+  position: absolute;
+  cursor: grab;
+  transition: fall 5s linear infinite;
+  z-index: 2;
+}
+
+.item-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+@keyframes fall {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* Header Styles */
+.header {
+  background: #4CAF50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-image {
+  height: 50px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+/* Home Page Styles */
+.home {
+  text-align: center;
+  padding: 50px;
+}
+
+.cta-button {
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Footer Styles */
+.footer {
+  background: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Contact Page Styles */
+.contact {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.submit-button {
+  background: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: #45a049;
+}
+/* About Page Styles */
+.about {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+}
+
+.about h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 28px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #4CAF50;
+}
+
+.about h3 {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.about p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.about ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.about ul li {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.cta-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cta-section p {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  background: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  background: #45a049;
+}
+
+/* Timer Styles */
+.timer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.timer h2 {
+  font-size: 24px;
+  color: #4CAF50;
+}
+
+/* Game Container Styles */
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.game-content {
+  margin-top: 20px;
+}
